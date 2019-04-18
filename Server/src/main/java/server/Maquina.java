@@ -6,8 +6,8 @@ import javax.persistence.Id;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,17 +15,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-public class Produto {
+public class Maquina {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String nome;
-	private float precoUnitario;
+	private String idCarteira;
 
-    @OneToMany(mappedBy="produtoID", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="maquinaID", cascade = CascadeType.ALL)
     private Set<Transacao> transacoes = new HashSet();
 
-    @OneToMany(mappedBy="produtoID", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="maquinaID", cascade = CascadeType.ALL)
     private Set<Trilha> trilhas = new HashSet();
 
 	public Long getId() {
@@ -35,18 +34,11 @@ public class Produto {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getIdCarteira() {
+		return idCarteira;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public float getPrecoUnitario() {
-		return precoUnitario;
-	}
-	public void setPrecoUnitario(float precoUnitario) {
-		this.precoUnitario = precoUnitario;
+	public void setIdCarteira(String idCarteira) {
+		this.idCarteira = idCarteira;
 	}
 
 	public Set getTransacoes(){

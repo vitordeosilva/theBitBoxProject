@@ -13,14 +13,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-public class Transacao {
+public class Trilha {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private int estado;
-    private Long usuarioID;
-    private Long maquinaID;
-    private Long produtoID;
+	private Long maquinaID;
+	private Long produtoID;
+	private int qtdeProdutos;
 
 	public Long getId() {
 		return id;
@@ -29,31 +28,24 @@ public class Transacao {
 		this.id = id;
 	}
 
-	public Long getUsuarioID(){
-		return usuarioID;
-	}
-	public void setUsuarioID(Long usuarioID){
-		this.usuarioID = usuarioID;
-	}
-
-	public Long getMaquinaID(){
+	public Long getMaquinaID() {
 		return maquinaID;
 	}
-	public void setMaquinaID(Long maquinaID){
+	public void setMaquinaID(Long maquinaID) {
 		this.maquinaID = maquinaID;
 	}
 
-	public Long getProdutoID(){
+	public Long getProdutoID() {
 		return produtoID;
 	}
-	public void setProdutoID(Long produtoID){
+	public void setProdutoID(Long produtoID) {
 		this.produtoID = produtoID;
 	}
 
-	public int getEstado(){
-		return estado;
+	public int getQtdeProdutos() {
+		return qtdeProdutos;
 	}
-	public void setEstado(int estado){
-		this.estado = estado;
+	public void setQtdeProdutos(int qtdeProdutos) {
+		this.qtdeProdutos = qtdeProdutos;
 	}
 }

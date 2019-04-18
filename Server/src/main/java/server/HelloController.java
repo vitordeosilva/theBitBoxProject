@@ -22,6 +22,12 @@ public class HelloController {
 	@Autowired
 	TransacaoRepository transacaoRepository;
 
+	@Autowired
+	TrilhaRepository trilhaRepository;
+
+	@Autowired
+	MaquinaRepository maquinaRepository;
+
     @RequestMapping("/produtos/{id}")
     public ResponseEntity produto(@PathVariable("id") Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
@@ -53,6 +59,26 @@ public class HelloController {
 		Optional<Transacao> transacao = transacaoRepository.findById(id);
 		if (transacao.isPresent()){
 			return ResponseEntity.ok(transacao.get());
+		}else{
+		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@RequestMapping("/trilhas/{id}")
+	public ResponseEntity trilha(@PathVariable("id") Long id) {
+		Optional<Trilha> trilha = trilhaRepository.findById(id);
+		if (trilha.isPresent()){
+			return ResponseEntity.ok(trilha.get());
+		}else{
+		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@RequestMapping("/maquinas/{id}")
+	public ResponseEntity maquina(@PathVariable("id") Long id) {
+		Optional<Maquina> maquina = maquinaRepository.findById(id);
+		if (maquina.isPresent()){
+			return ResponseEntity.ok(maquina.get());
 		}else{
 		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 		}
