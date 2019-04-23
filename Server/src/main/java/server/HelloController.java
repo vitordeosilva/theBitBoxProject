@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Optional;
 
@@ -28,6 +29,38 @@ public class HelloController {
 	@Autowired
 	MaquinaRepository maquinaRepository;
 
+
+	//cria novo no banco
+
+	@PostMapping("/produtos")
+	public ResponseEntity newProduto(@RequestBody Produto produto) {
+		return ResponseEntity.ok(produtoRepository.save(produto));
+	}
+
+	@PostMapping("/transacoes")
+	public ResponseEntity newTransacao(@RequestBody Transacao transacao) {
+		return ResponseEntity.ok(transacaoRepository.save(transacao));
+	}
+
+
+	//muda estado da transacao
+
+	@PostMapping("/transacoes/{id}")
+	public ResponseEntity setTransacaoEstado(@PathVariable("id") Long id, @RequestParam("estado") int estado) {
+		Optional<Transacao> transacao = transacaoRepository.findById(id);
+		System.out.println("estado=" + estado);
+		if (transacao.isPresent()){
+			transacao.get().setEstado(estado);
+			return ResponseEntity.ok(transacaoRepository.save(transacao.get()));
+		}else{
+			System.out.println("transacao not found");
+		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+
+	//get
+
     @RequestMapping("/produtos/{id}")
     public ResponseEntity produto(@PathVariable("id") Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
@@ -37,12 +70,6 @@ public class HelloController {
 		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 		}
     }
-
-	@PostMapping("/produtos")
-	Produto newProduto(@RequestBody Produto produto) {
-		return produtoRepository.save(produto);
-	}
-
 
     @RequestMapping("/usuarios/{id}")
     public ResponseEntity usuario(@PathVariable("id") Long id) {
