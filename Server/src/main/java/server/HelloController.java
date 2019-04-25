@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Optional;
 
 @RestController
@@ -58,6 +59,19 @@ public class HelloController {
 		}
 	}
 
+
+	//get usuario por nome e senha	
+
+    @RequestMapping(value="/usuarios", method = RequestMethod.GET)
+    public ResponseEntity usuarioByNameAndPasswd(@RequestParam("nome") String nome, @RequestParam("senha") String senha) {
+		System.out.println("nome=" + nome + ", senha=" + senha);
+		Optional<Usuario> usuario = usuarioRepository.findByNameAndPasswd(nome,senha);
+		if (usuario.isPresent()){
+			return ResponseEntity.ok(usuario.get());
+		}else{
+		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+		}
+    }
 
 	//get
 
