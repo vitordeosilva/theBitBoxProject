@@ -13,4 +13,3 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
     public Optional<Usuario> findByNameAndPasswd(@Param("nome") String nome, @Param("senha") String senha);
 
 }
-
