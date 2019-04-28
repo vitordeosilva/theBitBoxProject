@@ -20,6 +20,7 @@ public class Trilha {
 	private Long maquinaID;
 	private Long produtoID;
 	private int qtdeProdutos;
+	private int posicao;
 
 	public Long getId() {
 		return id;
@@ -47,5 +48,12 @@ public class Trilha {
 	}
 	public void setQtdeProdutos(int qtdeProdutos) {
 		this.qtdeProdutos = qtdeProdutos;
+	}
+	
+	public int getPosicao() {
+		return posicao;
+	}
+	public void setPosicao(int posicao) {
+		this.posicao = posicao;
 	}
 }

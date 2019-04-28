@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Optional;
+import java.util.List;
 
 @RestController
 public class HelloController {
-
+	
 	@Autowired
 	ProdutoRepository produtoRepository;
 
@@ -45,7 +46,6 @@ public class HelloController {
 
 
 	//muda estado da transacao
-
 	@PostMapping("/transacoes/{id}")
 	public ResponseEntity setTransacaoEstado(@PathVariable("id") Long id, @RequestParam("estado") int estado) {
 		Optional<Transacao> transacao = transacaoRepository.findById(id);
@@ -61,7 +61,6 @@ public class HelloController {
 
 
 	//get usuario por nome e senha	
-
     @RequestMapping(value="/usuarios", method = RequestMethod.GET)
     public ResponseEntity usuarioByNameAndPasswd(@RequestParam("nome") String nome, @RequestParam("senha") String senha) {
 		System.out.println("nome=" + nome + ", senha=" + senha);
@@ -72,9 +71,27 @@ public class HelloController {
 		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 		}
     }
+	
+	//get trilha para liberar produto
+	@RequestMapping(value="/dispense/{id}")
+	public ResponseEntity dispense(@PathVariable("id") Long id) {
+		List transacoes = transacaoRepository.findTransactionsWaitingToDispense(id);
+		
+		if (transacoes.size() == 0) {
+			return ResponseEntity.ok(-1);
+		}
+		
+		Transacao transacao = (Transacao) transacoes.get(0);
+		Optional<Integer> pos = trilhaRepository.getPosition(transacao.getMaquinaID(), transacao.getProdutoID());
+		if (pos.isPresent()){
+			return ResponseEntity.ok(pos.get());
+		}else{
+			//erro, a trilha esta vazia
+			return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+		}
+	}
 
 	//get
-
     @RequestMapping("/produtos/{id}")
     public ResponseEntity produto(@PathVariable("id") Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
