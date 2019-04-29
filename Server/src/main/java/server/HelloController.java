@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Optional;
 import java.util.List;
+import resposta.*;
 
 @RestController
 public class HelloController {
@@ -73,21 +74,21 @@ public class HelloController {
     }
 	
 	//get trilha para liberar produto
-	@RequestMapping(value="/dispense/{id}")
+	@RequestMapping(value="/dispensar/{id}")
 	public ResponseEntity dispense(@PathVariable("id") Long id) {
 		List transacoes = transacaoRepository.findTransactionsWaitingToDispense(id);
 		
 		if (transacoes.size() == 0) {
-			return ResponseEntity.ok(-1);
+			return ResponseEntity.ok(new DispensarResposta("NO TRANSACTIONS", 1, -1));
 		}
 		
 		Transacao transacao = (Transacao) transacoes.get(0);
 		Optional<Integer> pos = trilhaRepository.getPosition(transacao.getMaquinaID(), transacao.getProdutoID());
 		if (pos.isPresent()){
-			return ResponseEntity.ok(pos.get());
+			return ResponseEntity.ok(new DispensarResposta("", 0, pos.get()));
 		}else{
 			//erro, a trilha esta vazia
-			return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+			return ResponseEntity.ok(new DispensarResposta("NO PRODUCT", 1, pos.get()));
 		}
 	}
 
