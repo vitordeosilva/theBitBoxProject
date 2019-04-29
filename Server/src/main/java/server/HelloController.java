@@ -99,7 +99,7 @@ public class HelloController {
 		List transacoes = transacaoRepository.findTransactionsWaitingToDispense(id);
 		
 		if (transacoes.size() == 0) {
-			return ResponseEntity.ok(new DispensarResposta("NO TRANSACTIONS", 1, -1));
+			return ResponseEntity.ok(-1);
 		}
 		
 		Transacao transacao = (Transacao) transacoes.get(0);
@@ -109,7 +109,7 @@ public class HelloController {
 			return ResponseEntity.ok(pos.get());
 		}else{
 			//erro, a trilha esta vazia
-			return ResponseEntity.ok(new DispensarResposta("NO PRODUCT", 1, pos.get()));
+			return ResponseEntity.ok(-1);
 		}
 	}
 
