@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.Optional;
 import java.util.List;
+import java.util.ArrayList;
 import resposta.*;
+import blockio.*;
 
 @RestController
 public class HelloController {
@@ -31,6 +33,12 @@ public class HelloController {
 
 	@Autowired
 	MaquinaRepository maquinaRepository;
+	
+	private int ESTADO_CLIENTE_ESCOLHEU_DOCE = 1;
+	private int ESTADO_ESPERANDO_PAGAMENTO = 2;
+	private int ESTADO_PAGAMENTO_EM_ANDAMENTO = 3;
+	private int ESTADO_PRODUTO_LIBERADO = 4;
+	private int ESTADO_PRODUTO_RETIRADO = 5;
 
 
 	//cria novo no banco
@@ -61,15 +69,27 @@ public class HelloController {
 	}
 
 
-	//get usuario por nome e senha	
-    @RequestMapping(value="/usuarios", method = RequestMethod.GET)
+	//post usuario por nome e senha	
+    @PostMapping(value="/login")
     public ResponseEntity usuarioByNameAndPasswd(@RequestParam("nome") String nome, @RequestParam("senha") String senha) {
-		System.out.println("nome=" + nome + ", senha=" + senha);
 		Optional<Usuario> usuario = usuarioRepository.findByNameAndPasswd(nome,senha);
 		if (usuario.isPresent()){
-			return ResponseEntity.ok(usuario.get());
+			Usuario user = usuario.get();
+			float[] saldos = null;
+			try {
+				saldos = BlockIO.getSaldo("6bef-475f-4d48-2370");
+			} catch (Exception e) {
+				List l = new ArrayList();
+				return ResponseEntity.ok(new LoginResposta(e.toString(), 1, (long)-1, (float)-1, (float)-1, l));
+			}
+				
+			float saldo = (float) saldos[0];
+			float saldo_pendente = (float) saldos[1];
+			List id_trans = transacaoRepository.findUnfinishedTransactionsFromUID(user.getId());
+			return ResponseEntity.ok(new LoginResposta("OK", 0, user.getId(), saldo, saldo_pendente, id_trans));
 		}else{
-		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+			List l = new ArrayList();
+		 	return ResponseEntity.ok(new LoginResposta("USER NOT FOUND", 1, (long)-1, (float)-1, (float)-1, l));
 		}
     }
 	
@@ -85,7 +105,8 @@ public class HelloController {
 		Transacao transacao = (Transacao) transacoes.get(0);
 		Optional<Integer> pos = trilhaRepository.getPosition(transacao.getMaquinaID(), transacao.getProdutoID());
 		if (pos.isPresent()){
-			return ResponseEntity.ok(new DispensarResposta("", 0, pos.get()));
+			//return ResponseEntity.ok(new DispensarResposta("OK", 0, pos.get()));
+			return ResponseEntity.ok(pos.get());
 		}else{
 			//erro, a trilha esta vazia
 			return ResponseEntity.ok(new DispensarResposta("NO PRODUCT", 1, pos.get()));
