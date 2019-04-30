@@ -15,3 +15,4 @@ BlockIO\BlockIO.class
 server\Produto.class
 server\MaquinaRepository.class
 server\Transacao.class
+com\example\demo\DatabaseConfig.class
