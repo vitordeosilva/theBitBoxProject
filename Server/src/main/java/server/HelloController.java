@@ -41,9 +41,9 @@ public class HelloController {
 	private int ESTADO_PRODUTO_RETIRADO = 5;
 	
 	//tela de hello
-	@PostMapping("/")
-	public ResponseEntity newTransacao(@RequestBody Transacao transacao) {
-		return ResponseEntity.ok(transacaoRepository.save(transacao));
+	@RequestMapping("/")
+	public ResponseEntity hello() {
+		return ResponseEntity.ok("Hello from the BitBox server!");
 	}
 
 
