@@ -39,6 +39,12 @@ public class HelloController {
 	private int ESTADO_PAGAMENTO_EM_ANDAMENTO = 3;
 	private int ESTADO_PRODUTO_LIBERADO = 4;
 	private int ESTADO_PRODUTO_RETIRADO = 5;
+	
+	//tela de hello
+	@PostMapping("/")
+	public ResponseEntity newTransacao(@RequestBody Transacao transacao) {
+		return ResponseEntity.ok(transacaoRepository.save(transacao));
+	}
 
 
 	//cria novo no banco
