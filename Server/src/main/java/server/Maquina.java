@@ -17,7 +17,6 @@ import javax.persistence.Table;
 @Entity
 public class Maquina {
 	@Id
-	@GeneratedValue
 	private Long id;
 	private String idCarteira;
 

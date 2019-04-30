@@ -83,7 +83,6 @@ public class HelloController {
 			transacao.get().setEstado(estado);
 			return ResponseEntity.ok(transacaoRepository.save(transacao.get()));
 		}else{
-			System.out.println("transacao not found");
 		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 		}
 	}

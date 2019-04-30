@@ -15,7 +15,6 @@ import javax.persistence.Table;
 @Entity
 public class Trilha {
 	@Id
-	@GeneratedValue
 	private Long id;
 	private Long maquinaID;
 	private Long produtoID;

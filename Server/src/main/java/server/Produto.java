@@ -17,7 +17,6 @@ import javax.persistence.Table;
 @Entity
 public class Produto {
 	@Id
-	@GeneratedValue
 	private Long id;
 	private String nome;
 	private float precoUnitario;
