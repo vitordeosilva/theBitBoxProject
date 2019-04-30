@@ -159,7 +159,7 @@ public class HelloController {
 	
 	@RequestMapping("/maquinas")
     public ResponseEntity maquinas() {
-		List maquinas = maquina.findAll();
+		List maquinas = maquinaRepository.findAll();
 		return ResponseEntity.ok(maquinas);
     }
 
