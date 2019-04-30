@@ -132,8 +132,38 @@ public class HelloController {
 			return ResponseEntity.ok(-1);
 		}
 	}
+	//get all
+	@RequestMapping("/produtos")
+    public ResponseEntity produtos() {
+		List produtos = produtoRepository.findAll();
+		return ResponseEntity.ok(produtos);
+    }
+	
+	@RequestMapping("/usuarios")
+    public ResponseEntity usuarios() {
+		List usuarios = usuarioRepository.findAll();
+		return ResponseEntity.ok(usuarios);
+    }
+	
+	@RequestMapping("/transacoes")
+    public ResponseEntity transacoes() {
+		List transacoes = transacaoRepository.findAll();
+		return ResponseEntity.ok(transacoes);
+    }
+	
+	@RequestMapping("/trilhas")
+    public ResponseEntity trilhas() {
+		List trilhas = produtoRepository.findAll();
+		return ResponseEntity.ok(trilhas);
+    }
+	
+	@RequestMapping("/maquinas")
+    public ResponseEntity maquinas() {
+		List maquinas = maquina.findAll();
+		return ResponseEntity.ok(maquinas);
+    }
 
-	//get
+	//get por id
     @RequestMapping("/produtos/{id}")
     public ResponseEntity produto(@PathVariable("id") Long id) {
 		Optional<Produto> produto = produtoRepository.findById(id);
