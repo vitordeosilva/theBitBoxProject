@@ -103,10 +103,11 @@ public class HelloController {
 		}
 		
 		Transacao transacao = (Transacao) transacoes.get(0);
-		Optional<Integer> pos = trilhaRepository.getPosition(transacao.getMaquinaID(), transacao.getProdutoID());
-		if (pos.isPresent()){
-			//return ResponseEntity.ok(new DispensarResposta("OK", 0, pos.get()));
-			return ResponseEntity.ok(pos.get());
+		Optional<Trilha> t = trilhaRepository.getTrilha(transacao.getMaquinaID(), transacao.getProdutoID());
+		if (t.isPresent()){
+			Trilha trilha = t.get();
+			int[] pos = {trilha.getPosicaoLinha(), trilha.getPosicaoColuna()};
+			return ResponseEntity.ok(pos);
 		}else{
 			//erro, a trilha esta vazia
 			return ResponseEntity.ok(-1);

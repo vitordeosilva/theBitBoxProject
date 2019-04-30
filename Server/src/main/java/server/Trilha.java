@@ -20,7 +20,8 @@ public class Trilha {
 	private Long maquinaID;
 	private Long produtoID;
 	private int qtdeProdutos;
-	private int posicao;
+	private int posicaoLinha;
+	private int posicaoColuna;
 
 	public Long getId() {
 		return id;
@@ -50,10 +51,10 @@ public class Trilha {
 		this.qtdeProdutos = qtdeProdutos;
 	}
 	
-	public int getPosicao() {
-		return posicao;
+	public int getPosicaoLinha() {
+		return posicaoLinha;
 	}
-	public void setPosicao(int posicao) {
-		this.posicao = posicao;
+	public int getPosicaoColuna() {
+		return posicaoColuna;
 	}
 }

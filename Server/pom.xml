@@ -48,6 +48,11 @@
             <artifactId>httpclient</artifactId>
             <version>4.5</version>
         </dependency>
+		<dependency>
+			<groupId>com.heroku.api</groupId>
+			<artifactId>heroku-json-gson</artifactId>
+			<version>0.10</version>
+		</dependency>
 	</dependencies>
 	
 
