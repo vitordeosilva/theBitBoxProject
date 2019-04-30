@@ -48,7 +48,6 @@ public class HelloController {
 
 
 	//cria novo no banco
-
 	@PostMapping("/produtos")
 	public ResponseEntity newProduto(@RequestBody Produto produto) {
 		return ResponseEntity.ok(produtoRepository.save(produto));
@@ -57,6 +56,21 @@ public class HelloController {
 	@PostMapping("/transacoes")
 	public ResponseEntity newTransacao(@RequestBody Transacao transacao) {
 		return ResponseEntity.ok(transacaoRepository.save(transacao));
+	}
+	
+	@PostMapping("/maquinas")
+	public ResponseEntity newMaquina(@RequestBody Maquina maquina) {
+		return ResponseEntity.ok(maquinaRepository.save(maquina));
+	}
+	
+	@PostMapping("/trilhas")
+	public ResponseEntity newTrilha(@RequestBody Trilha trilha) {
+		return ResponseEntity.ok(trilhaRepository.save(trilha));
+	}
+	
+	@PostMapping("/usuarios")
+	public ResponseEntity newUsuario(@RequestBody Usuario usuario) {
+		return ResponseEntity.ok(usuarioRepository.save(usuario));
 	}
 
 
