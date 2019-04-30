@@ -147,7 +147,7 @@ public class HelloController {
 		if (transacao.isPresent()){
 			return ResponseEntity.ok(transacao.get());
 		}else{
-		 	return ResponseEntity(-1);
+		 	return ResponseEntity.ok(-1);
 		}
 	}
 
