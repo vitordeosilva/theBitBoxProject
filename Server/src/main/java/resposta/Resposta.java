@@ -9,4 +9,12 @@ public class Resposta {
 		this.erro = erro;
 		this.mensagem = mensagem;
 	}
+	
+	pulbic int erro getErro() {
+		return erro;
+	}
+	
+	public String getMensagem() {
+		return mensagem;
+	}
 }

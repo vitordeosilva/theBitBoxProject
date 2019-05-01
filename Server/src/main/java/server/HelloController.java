@@ -90,7 +90,7 @@ public class HelloController {
 
 	//post usuario por nome e senha	
     @PostMapping(value="/login")
-    public ResponseEntity usuarioByNameAndPasswd(@RequestParam("nome") String nome, @RequestParam("senha") String senha) {
+    public ResponseEntity usuarioByNameAndPasswd(@BodyParam("nome") String nome, @BodyParam("senha") String senha) {
 		Optional<Usuario> usuario = usuarioRepository.findByNameAndPasswd(nome,senha);
 		if (usuario.isPresent()){
 			Usuario user = usuario.get();
@@ -153,7 +153,7 @@ public class HelloController {
 	
 	@RequestMapping("/trilhas")
     public ResponseEntity trilhas() {
-		List trilhas = produtoRepository.findAll();
+		List trilhas = trilhasRepository.findAll();
 		return ResponseEntity.ok(trilhas);
     }
 	
@@ -213,6 +213,4 @@ public class HelloController {
 		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
-
 }

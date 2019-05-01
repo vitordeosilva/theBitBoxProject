@@ -17,4 +17,20 @@ public class LoginResposta extends Resposta {
 		this.saldo_pendente = saldo_pendente;
 		this.transacoes_pendentes = transacoes_pendentes;
 	}
+	
+	public Long getIdUsuario() {
+		return id_usuario;
+	}
+	
+	public float getSaldo() {
+		return saldo;
+	}
+	
+	public float getSaldoPendente() {
+		return saldo_pendente;
+	}
+	
+	public List getTransacoesPendentes() {
+		return transacoes_pendentes;
+	}
 }
