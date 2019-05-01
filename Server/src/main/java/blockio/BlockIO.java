@@ -5,7 +5,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
-//import com.google.gson.Gson;
+import com.google.gson.Gson;
 
 public class BlockIO {
 	public static float[] getSaldo(String api_key) throws Exception {
