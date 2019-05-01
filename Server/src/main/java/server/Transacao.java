@@ -11,7 +11,8 @@ import javax.persistence.*;
 @Entity
 public class Transacao {
 	@Id
-	@GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 	private int estado;
     private Long usuarioID;
     private Long maquinaID;
