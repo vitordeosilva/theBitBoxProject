@@ -9,7 +9,7 @@ public class TransacaoResposta extends Resposta {
     private Long maquinaID;
     private Long produtoID;
 	
-	public NovaTransacaoResposta(String mensagem, int erro, Transacao transacao) {
+	public TransacaoResposta(String mensagem, int erro, Transacao transacao) {
 		super(mensagem, erro);
 		this.id = transacao.getId();
 		this.estado = transacao.getEstado();
