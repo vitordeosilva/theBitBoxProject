@@ -101,7 +101,7 @@ public class HelloController {
 				saldos = BlockIO.getSaldo("6bef-475f-4d48-2370");
 			} catch (Exception e) {
 				List l = new ArrayList();
-				return ResponseEntity.ok(new Resposta(e.toString(), 1);
+				return ResponseEntity.ok(new Resposta(e.toString(), 1));
 			}
 				
 			float saldo = (float) saldos[0];
@@ -110,7 +110,7 @@ public class HelloController {
 			return ResponseEntity.ok(new LoginResposta("OK", 0, user.getId(), saldo, saldo_pendente, id_trans));
 		}else{
 			List l = new ArrayList();
-		 	return ResponseEntity.ok(new Resposta("USER NOT FOUND", 1);
+		 	return ResponseEntity.ok(new Resposta("USER NOT FOUND", 1));
 		}
     }
 	
