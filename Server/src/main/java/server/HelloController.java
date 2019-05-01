@@ -90,7 +90,9 @@ public class HelloController {
 
 	//post usuario por nome e senha	
     @PostMapping(value="/login")
-    public ResponseEntity usuarioByNameAndPasswd(@RequestParam("nome") String nome, @RequestParam("senha") String senha) {
+    public ResponseEntity usuarioByNameAndPasswd(@RequestBody Map<String, String> json) {
+		String nome = json.get("nome");
+		String senha = json.get("senha");
 		Optional<Usuario> usuario = usuarioRepository.findByNameAndPasswd(nome,senha);
 		if (usuario.isPresent()){
 			Usuario user = usuario.get();
@@ -99,7 +101,7 @@ public class HelloController {
 				saldos = BlockIO.getSaldo("6bef-475f-4d48-2370");
 			} catch (Exception e) {
 				List l = new ArrayList();
-				return ResponseEntity.ok(new LoginResposta(e.toString(), 1, (long)-1, (float)-1, (float)-1, l));
+				return ResponseEntity.ok(new Resposta(e.toString(), 1);
 			}
 				
 			float saldo = (float) saldos[0];
@@ -108,7 +110,7 @@ public class HelloController {
 			return ResponseEntity.ok(new LoginResposta("OK", 0, user.getId(), saldo, saldo_pendente, id_trans));
 		}else{
 			List l = new ArrayList();
-		 	return ResponseEntity.ok(new LoginResposta("USER NOT FOUND", 1, (long)-1, (float)-1, (float)-1, l));
+		 	return ResponseEntity.ok(new Resposta("USER NOT FOUND", 1);
 		}
     }
 	
