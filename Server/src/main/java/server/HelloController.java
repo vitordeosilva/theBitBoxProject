@@ -102,7 +102,6 @@ public class HelloController {
 			try {
 				saldos = BlockIO.getSaldo(user.getIdCarteira());
 			} catch (Exception e) {
-				List l = new ArrayList();
 				return ResponseEntity.ok(new Resposta(e.toString(), 1));
 			}
 				
