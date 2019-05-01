@@ -60,7 +60,7 @@ public class HelloController {
 			return ResponseEntity.ok(new Resposta("ERROR - ID must be 0", 1));
 		transacao.setEstado(1);
 		transacao.setId((long) 0);
-		transacao = transacaoRepository.save(transacao);
+		transacao = transacaoRepository.persist(transacao);
 		return ResponseEntity.ok(new NovaTransacaoResposta("OK", 0, transacao.getId()));
 	}
 	
