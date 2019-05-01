@@ -56,6 +56,8 @@ public class HelloController {
 
 	@PostMapping("/transacoes")
 	public ResponseEntity newTransacao(@RequestBody Transacao transacao) {
+		if (transacao.id != 0)
+			return ResponseEntity.ok(new Resposta("ERROR - ID must be 0", 1));
 		return ResponseEntity.ok(transacaoRepository.save(transacao));
 	}
 	
