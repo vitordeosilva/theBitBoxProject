@@ -23,11 +23,8 @@ public class BlockIO {
 		
 		if (bio_resposta.status.equals("success")) {
 			float saldo = Float.parseFloat((String) bio_resposta.data.get("available_balance"));
-			
-			return new float[] {saldo, (float) 2.0};
-			/*
-			float saldo_pendente = (float)bio_resposta.data.get("pending_received_balance");
-			return new float[] {saldo, saldo_pendente};*/
+			float saldo_pendente = Float.parseFloat((String) bio_resposta.data.get("pending_received_balance"));
+			return new float[] {saldo, saldo_pendente};
 		}else{
 			throw new Exception("Erro na comunicacao com Block.io: " + bio_resposta.data.get("error_message"));
 		}
