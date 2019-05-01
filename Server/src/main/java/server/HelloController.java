@@ -127,7 +127,7 @@ public class HelloController {
 		}
 		
 		Transacao transacao = (Transacao) transacoes.get(0);
-		Optional<Trilha> t = trilhaRepository.getTrilha(transacao.getMaquinaID(), transacao.getProdutoID());
+		Optional<Trilha> t = trilhaRepository.getTrilha(transacao.getMaquinaId(), transacao.getProdutoID());
 		if (t.isPresent()){
 			Trilha trilha = t.get();
 			int[] pos = {trilha.getPosicaoLinha(), trilha.getPosicaoColuna()};
