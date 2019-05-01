@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 public class Transacao {
 	@Id
-	@GeneratedValue(strategy="increment")
+	@GeneratedValue()
 	private Long id;
 	private int estado;
     private Long usuarioID;
