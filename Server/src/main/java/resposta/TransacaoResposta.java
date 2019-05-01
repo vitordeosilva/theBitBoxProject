@@ -2,7 +2,7 @@ package resposta;
 
 import server.Transacao;
 
-public class NovaTransacaoResposta extends Resposta {
+public class TransacaoResposta extends Resposta {
 	private Long id;
 	private int estado;
     private Long usuarioID;
