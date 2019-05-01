@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 public class Transacao {
-	@ID
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 	private int estado;
