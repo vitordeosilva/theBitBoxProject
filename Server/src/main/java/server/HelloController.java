@@ -193,9 +193,10 @@ public class HelloController {
 	public ResponseEntity transacao(@PathVariable("id") Long id) {
 		Optional<Transacao> transacao = transacaoRepository.findById(id);
 		if (transacao.isPresent()){
-			return ResponseEntity.ok(transacao.get());
+			Transacao trans = transacao.get();
+			return ResponseEntity.ok(new TransacaoResposta("OK", 0, trans));
 		}else{
-		 	return ResponseEntity.ok(-1);
+		 	return ResponseEntity.ok(new Resposta("Transaction not found", 1));
 		}
 	}
 

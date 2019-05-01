@@ -1,7 +1,7 @@
 package resposta;
 
 public class NovaTransacaoResposta extends Resposta {
-	Long id_transacao;
+	private Long id_transacao;
 	
 	public NovaTransacaoResposta(String mensagem, int erro, Long id_transacao) {
 		super(mensagem, erro);
