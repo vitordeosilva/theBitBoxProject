@@ -14,9 +14,9 @@ public class Transacao {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 	private int estado;
-    private Long usuarioID;
-    private Long maquinaID;
-    private Long produtoID;
+    private Long usuarioId;
+    private Long maquinaId;
+    private Long produtoId;
 
 	public Long getId() {
 		return id;
@@ -25,25 +25,25 @@ public class Transacao {
 		this.id = id;
 	}
 
-	public Long getUsuarioID(){
-		return usuarioID;
+	public Long getUsuarioId(){
+		return usuarioId;
 	}
-	public void setUsuarioID(Long usuarioID){
-		this.usuarioID = usuarioID;
-	}
-
-	public Long getMaquinaID(){
-		return maquinaID;
-	}
-	public void setMaquinaID(Long maquinaID){
-		this.maquinaID = maquinaID;
+	public void setUsuarioId(Long usuarioId){
+		this.usuarioId = usuarioId;
 	}
 
-	public Long getProdutoID(){
-		return produtoID;
+	public Long getMaquinaId(){
+		return maquinaId;
 	}
-	public void setProdutoID(Long produtoID){
-		this.produtoID = produtoID;
+	public void setMaquinaId(Long maquinaId){
+		this.maquinaId = maquinaId;
+	}
+
+	public Long getProdutoId(){
+		return produtoId;
+	}
+	public void setProdutoId(Long produtoId){
+		this.produtoId = produtoId;
 	}
 
 	public int getEstado(){
