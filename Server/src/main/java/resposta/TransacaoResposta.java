@@ -11,7 +11,7 @@ public class TransacaoResposta extends Resposta {
 	
 	public TransacaoResposta(String mensagem, int erro, Transacao transacao) {
 		super(mensagem, erro);
-		this.id = transacao.getId();
+		this.id = transacao.getID();
 		this.estado = transacao.getEstado();
 		this.usuarioID = transacao.getUsuarioID();
 		this.maquinaID = transacao.getMaquinaID();
@@ -26,15 +26,15 @@ public class TransacaoResposta extends Resposta {
 		return estado;
 	}
 	
-	public Long getUsuarioID() {
-		return usuarioID;
+	public Long getUsuarioId() {
+		return usuarioId;
 	}
 	
-	public Long getMaquinaID() {
+	public Long getMaquinaId() {
 		return maquinaID;
 	}
 	
-	public Long getProdutoID() {
+	public Long getProdutoId() {
 		return produtoID;
 	}
 }
