@@ -81,12 +81,11 @@ public class HelloController {
 	@PostMapping("/transacoes/{id}")
 	public ResponseEntity setTransacaoEstado(@PathVariable("id") Long id, @RequestParam("estado") int estado) {
 		Optional<Transacao> transacao = transacaoRepository.findById(id);
-		System.out.println("estado=" + estado);
 		if (transacao.isPresent()){
 			transacao.get().setEstado(estado);
-			return ResponseEntity.ok(transacaoRepository.save(transacao.get()));
+			return ResponseEntity.ok(new Resposta("OK", 0));
 		}else{
-		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+		 	return ResponseEntity.ok(new Resposta("Transaction not found"));
 		}
 	}
 
