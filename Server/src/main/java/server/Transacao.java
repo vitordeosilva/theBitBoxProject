@@ -11,8 +11,7 @@ import javax.persistence.*;
 @Entity
 public class Transacao {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(columnDefinition = "serial")
+	@GeneratedValue
 	private Long id;
 	private int estado;
     private Long usuarioID;
