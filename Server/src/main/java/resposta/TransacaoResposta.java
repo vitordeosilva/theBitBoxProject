@@ -27,7 +27,7 @@ public class TransacaoResposta extends Resposta {
 	}
 	
 	public Long getUsuarioId() {
-		return usuarioId;
+		return usuarioID;
 	}
 	
 	public Long getMaquinaId() {
