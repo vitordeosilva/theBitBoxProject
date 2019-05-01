@@ -85,7 +85,7 @@ public class HelloController {
 			transacao.get().setEstado(estado);
 			return ResponseEntity.ok(new Resposta("OK", 0));
 		}else{
-		 	return ResponseEntity.ok(new Resposta("Transaction not found"));
+		 	return ResponseEntity.ok(new Resposta("Transaction not found", 1));
 		}
 	}
 
