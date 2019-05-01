@@ -12,7 +12,6 @@ import javax.persistence.*;
 public class Transacao {
 	@Id
 	@GeneratedValue
-	private Long id;
 	private int estado;
     private Long usuarioID;
     private Long maquinaID;
