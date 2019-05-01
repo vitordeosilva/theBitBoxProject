@@ -59,7 +59,7 @@ public class HelloController {
 		if (transacao.getId() != 0)
 			return ResponseEntity.ok(new Resposta("ERROR - ID must be 0", 1));
 		transacao.setEstado(1);
-		transacao.setId((Long) 0);
+		transacao.setId((long) 0);
 		return ResponseEntity.ok(transacaoRepository.save(transacao));
 	}
 	
