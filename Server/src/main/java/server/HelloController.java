@@ -56,7 +56,7 @@ public class HelloController {
 
 	@PostMapping("/transacoes")
 	public ResponseEntity newTransacao(@RequestBody Transacao transacao) {
-		if (transacao.getId() != 0)
+		if (transacao.getID() != 0)
 			return ResponseEntity.ok(new Resposta("ERROR - ID must be 0", 1));
 		transacao.setEstado(1);
 		transacao = transacaoRepository.save(transacao);
