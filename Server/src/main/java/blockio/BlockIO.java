@@ -14,9 +14,7 @@ public class BlockIO {
 		HttpGet get = new HttpGet("https://block.io/api/v2/get_balance/?api_key=" + api_key);
 		CloseableHttpResponse resposta = client.execute(get);
 		
-		return new float[] {(float)1.0, (float)1.0};
-		
-		/*Gson gson = new Gson();
+		Gson gson = new Gson();
 		String jsonText = EntityUtils.toString(resposta.getEntity());
 		BlockIOResposta bio_resposta = gson.fromJson(jsonText, BlockIOResposta.class);
 		resposta.close();
@@ -27,6 +25,6 @@ public class BlockIO {
 			return new float[] {saldo, saldo_pendente};
 		}else{
 			throw new Exception("Erro na comunicacao com Block.io: " + bio_resposta.corpo.get("error_message"));
-		}*/
+		}
 	}
 }

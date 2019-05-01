@@ -100,7 +100,7 @@ public class HelloController {
 			Usuario user = usuario.get();
 			float[] saldos = null;
 			try {
-				saldos = BlockIO.getSaldo("6bef-475f-4d48-2370");
+				saldos = BlockIO.getSaldo(user.getIdCarteira());
 			} catch (Exception e) {
 				List l = new ArrayList();
 				return ResponseEntity.ok(new Resposta(e.toString(), 1));
