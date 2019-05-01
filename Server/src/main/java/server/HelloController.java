@@ -90,7 +90,7 @@ public class HelloController {
 
 	//post usuario por nome e senha	
     @PostMapping(value="/login")
-    public ResponseEntity usuarioByNameAndPasswd(@BodyParam("nome") String nome, @BodyParam("senha") String senha) {
+    public ResponseEntity usuarioByNameAndPasswd(@RequestBody("nome") String nome, @RequestBody("senha") String senha) {
 		Optional<Usuario> usuario = usuarioRepository.findByNameAndPasswd(nome,senha);
 		if (usuario.isPresent()){
 			Usuario user = usuario.get();
