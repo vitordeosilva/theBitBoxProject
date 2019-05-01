@@ -13,9 +13,9 @@ public class TransacaoResposta extends Resposta {
 		super(mensagem, erro);
 		this.id = transacao.getId();
 		this.estado = transacao.getEstado();
-		this.usuarioID = transacao.getUsuarioId();
-		this.maquinaID = transacao.getMaquinaId();
-		this.produtoID = transacao.getProdutoId();
+		this.usuarioID = transacao.getUsuarioID();
+		this.maquinaID = transacao.getMaquinaID();
+		this.produtoID = transacao.getProdutoID();
 	}
 	
 	public Long getId() {
