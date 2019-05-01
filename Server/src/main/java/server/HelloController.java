@@ -153,7 +153,7 @@ public class HelloController {
 	
 	@RequestMapping("/trilhas")
     public ResponseEntity trilhas() {
-		List trilhas = trilhasRepository.findAll();
+		List trilhas = trilhaRepository.findAll();
 		return ResponseEntity.ok(trilhas);
     }
 	
