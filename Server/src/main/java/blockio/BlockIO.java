@@ -19,9 +19,11 @@ public class BlockIO {
 		BlockIOResposta bio_resposta = gson.fromJson(jsonText, BlockIOResposta.class);
 		resposta.close();
 		
-		return new float[] {(float) 1.0, (float) 1.0};
 		
-		/*if (bio_resposta.status.equals("success")) {
+		
+		if (bio_resposta.status.equals("success")) {
+			return new float[] {(float) 1.0, (float) 1.0};
+		}/*
 			float saldo = (float)bio_resposta.corpo.get("available_balance");
 			float saldo_pendente = (float)bio_resposta.corpo.get("pending_received_balance");
 			return new float[] {saldo, saldo_pendente};
