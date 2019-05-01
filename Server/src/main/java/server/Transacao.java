@@ -6,16 +6,12 @@ import javax.persistence.Id;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 public class Transacao {
 	@Id
-	@GeneratedValue()
+	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private Long id;
 	private int estado;
     private Long usuarioID;
