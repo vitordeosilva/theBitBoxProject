@@ -22,7 +22,7 @@ public class BlockIO {
 		
 		
 		if (bio_resposta.status.equals("success")) {
-			float saldo = bio_resposta.saldo;
+			float saldo = Float.parseFloat((String) bio_resposta.data.get("available_balance"));
 			
 			return new float[] {saldo, (float) 2.0};
 			/*
