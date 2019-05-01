@@ -10,7 +10,7 @@ public class Resposta {
 		this.mensagem = mensagem;
 	}
 	
-	pulbic int erro getErro() {
+	pulbic int getErro() {
 		return erro;
 	}
 	
