@@ -25,7 +25,7 @@ public class BlockIO {
 			return new float[] {(float) 2.0, (float) 2.0};
 			float saldo = (float)bio_resposta.corpo.get("available_balance");
 			
-			return new float[] {(saldo, (float) 2.0});
+			return new float[] {saldo, (float) 2.0};
 			/*
 			float saldo_pendente = (float)bio_resposta.corpo.get("pending_received_balance");
 			return new float[] {saldo, saldo_pendente};*/
