@@ -58,7 +58,7 @@ public class HelloController {
 	public ResponseEntity newTransacao(@RequestBody Transacao transacao) {
 		if (transacao.getID() != 0)
 			return ResponseEntity.ok(new Resposta("ERROR - ID must be 0", 1));
-		transacao.setEstado(1);
+		transacao.setEstado(3);
 		transacao = transacaoRepository.save(transacao);
 		return ResponseEntity.ok(new NovaTransacaoResposta("OK", 0, transacao.getID()));
 	}
@@ -77,6 +77,37 @@ public class HelloController {
 	public ResponseEntity newUsuario(@RequestBody Usuario usuario) {
 		return ResponseEntity.ok(usuarioRepository.save(usuario));
 	}
+	
+	//deleta do banco por id
+	@RequestMapping(value = "/produtos/{id}",method=RequestMethod.DELETE)
+	public ResponseEntity deleteProduto(@PathVariable("id") Long id) {
+		produtoRepository.deleteById(id);
+		return ResponseEntity.ok(new Resposta("Deleted", 0));
+	}
+
+	@RequestMapping(value = "/transacoes/{id}",method=RequestMethod.DELETE)
+	public ResponseEntity deleteTransacao(@PathVariable("id") Long id) {
+		transacaoRepository.deleteById(id);
+		return ResponseEntity.ok(new Resposta("Deleted", 0));
+	}
+
+	@RequestMapping(value = "/maquinas/{id}",method=RequestMethod.DELETE)
+	public ResponseEntity deleteMaquina(@PathVariable("id") Long id) {
+		maquinaRepository.deleteById(id);
+		return ResponseEntity.ok(new Resposta("Deleted", 0));
+	}
+
+	@RequestMapping(value = "/trilhas/{id}",method=RequestMethod.DELETE)
+	public ResponseEntity deleteTrilha(@PathVariable("id") Long id) {
+		trilhaRepository.deleteById(id);
+		return ResponseEntity.ok(new Resposta("Deleted", 0));
+	}
+
+	@RequestMapping(value = "/usuarios/{id}",method=RequestMethod.DELETE)
+	public ResponseEntity deleteUsuario(@PathVariable("id") Long id) {
+		usuarioRepository.deleteById(id);
+		return ResponseEntity.ok(new Resposta("Deleted", 0));
+	}
 
 
 	//muda estado da transacao
@@ -84,8 +115,10 @@ public class HelloController {
 	public ResponseEntity setTransacaoEstado(@PathVariable("id") Long id, @RequestParam("estado") int estado) {
 		Optional<Transacao> transacao = transacaoRepository.findById(id);
 		if (transacao.isPresent()){
-			transacao.get().setEstado(estado);
-			return ResponseEntity.ok(new Resposta("OK", 0));
+			Transacao t = transacao.get();
+			t.setEstado(estado);
+			transacaoRepository.save(t);
+			return ResponseEntity.ok(new Resposta("OK", 0));			
 		}else{
 		 	return ResponseEntity.ok(new Resposta("Transaction not found", 1));
 		}
@@ -130,7 +163,7 @@ public class HelloController {
 		Optional<Trilha> t = trilhaRepository.getTrilha(transacao.getMaquinaID(), transacao.getProdutoID());
 		if (t.isPresent()){
 			Trilha trilha = t.get();
-			int[] pos = {trilha.getPosicaoLinha(), trilha.getPosicaoColuna()};
+			Long[] pos = {(long)trilha.getPosicaoLinha(), (long)trilha.getPosicaoColuna(), transacao.getID()};
 			return ResponseEntity.ok(pos);
 		}else{
 			//erro, a trilha esta vazia
