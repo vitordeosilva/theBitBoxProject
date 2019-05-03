@@ -6,12 +6,14 @@ public class MaquinaItem {
 	private Long produto_id;
 	private String produto_nome;
 	private float produto_preco;
+	private boolean produto_disponivel;
 
-	public MaquinaItem(Long maquina_id, Long produto_id, String produto_nome, float produto_preco){
+	public MaquinaItem(Long maquina_id, Long produto_id, String produto_nome, float produto_preco, boolean produto_disponivel){
 		this.maquina_id = maquina_id;
 		this.produto_id = produto_id;
 		this.produto_nome = produto_nome;
 		this.produto_preco = produto_preco;
+		this.produto_disponivel = produto_disponivel;
 	}
 
 	public Long getMaquinaId() {
@@ -40,6 +42,13 @@ public class MaquinaItem {
 	}
 	public void setProdutoPreco(float produto_preco) {
 		this.produto_preco = produto_preco;
+	}
+
+	public boolean getProdutoDisponivel() {
+		return produto_disponivel;
+	}
+	public void setProdutoDisponivel(boolean produto_disponivel) {
+		this.produto_disponivel = produto_disponivel;
 	}
 
 }

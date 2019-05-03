@@ -175,9 +175,9 @@ public class HelloController {
     @RequestMapping("/itens/{maquina_id}")
     public ResponseEntity items(@PathVariable("maquina_id") Long maquina_id) {
 
-		List itens = maquinaRepository.getAvailableItems(maquina_id);
+		List itens = maquinaRepository.getItems(maquina_id);
 		if (itens.size() == 0) {
-			return new ResponseEntity<MaquinaResposta>(new MaquinaResposta("There is no available items in the machine", -1,-1L,null), HttpStatus.BAD_REQUEST);
+			return ResponseEntity.ok(new Resposta("There are no available items in the machine", -1));
 		}
 		else{
 			return ResponseEntity.ok(new MaquinaResposta("OK", 0, maquina_id, itens));
