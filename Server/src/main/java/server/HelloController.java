@@ -194,7 +194,7 @@ public class HelloController {
 		List transacoes = transacaoRepository.findTransactionsWaitingToDispense(id);
 		
 		if (transacoes.size() == 0) {
-			return ResponseEntity.ok(-1);
+			return ResponseEntity.ok(new Resposta("No transaction found"));
 		}
 		
 		Transacao transacao = (Transacao) transacoes.get(0);
