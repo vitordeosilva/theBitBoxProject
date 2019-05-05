@@ -20,6 +20,7 @@ public class Produto {
 	private Long id;
 	private String nome;
 	private float precoUnitario;
+	private String imagemURL;
 
     @OneToMany(mappedBy="produtoID", cascade = CascadeType.ALL)
     private Set<Transacao> transacoes = new HashSet();
@@ -46,6 +47,13 @@ public class Produto {
 	}
 	public void setPrecoUnitario(float precoUnitario) {
 		this.precoUnitario = precoUnitario;
+	}
+
+	public String getImagemURL() {
+		return imagemURL;
+	}
+	public void setImagemURL(String imagemURL) {
+		this.imagemURL = imagemURL;
 	}
 
 	public Set getTransacoes(){

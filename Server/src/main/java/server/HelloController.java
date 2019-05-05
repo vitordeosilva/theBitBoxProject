@@ -124,6 +124,20 @@ public class HelloController {
 		}
 	}
 
+	//muda estado da transacao
+	@PostMapping("/produtos/{id}")
+	public ResponseEntity setProdutoImagemURL(@PathVariable("id") Long id, @RequestParam("imagemURL") String imagemURL) {
+		Optional<Produto> produto = produtoRepository.findById(id);
+		if (produto.isPresent()){
+			Produto p = produto.get();
+			p.setImagemURL(imagemURL);
+			produtoRepository.save(p);
+			return ResponseEntity.ok(new Resposta("OK", 0));			
+		}else{
+		 	return ResponseEntity.ok(new Resposta("Product not found", 1));
+		}
+	}
+
 
 	//post usuario por nome e senha	
     @PostMapping(value="/login")
