@@ -57,8 +57,11 @@ public class HelloController {
 	@PostMapping("/transacoes")
 	public ResponseEntity newTransacao(@RequestBody Transacao transacao) {
 		if (transacao.getID() != 0)
-			return ResponseEntity.ok(new Resposta("ERROR - ID must be 0", 1));
-		transacao.setEstado(3);
+			return ResponseEntity.ok(new Resposta("ID must be 0", 1));
+		List transacoes = transacaoRepository.findUnfinishedTransactionsFromMID(transacao.getMaquinaID());
+		if (!transacoes.isEmpty())
+			return ResponseEntity.ok(new Resposta("Machine already has an ongoing transaction"));
+		transacao.setEstado(1);
 		transacao = transacaoRepository.save(transacao);
 		return ResponseEntity.ok(new NovaTransacaoResposta("OK", 0, transacao.getID()));
 	}
