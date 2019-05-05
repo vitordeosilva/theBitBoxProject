@@ -124,7 +124,7 @@ public class HelloController {
 		}
 	}
 
-	//muda estado da transacao
+	//muda imagem do produto
 	@PostMapping("/produtos/{id}")
 	public ResponseEntity setProdutoImagemURL(@PathVariable("id") Long id, @RequestParam("imagemURL") String imagemURL) {
 		Optional<Produto> produto = produtoRepository.findById(id);
@@ -198,6 +198,7 @@ public class HelloController {
 		}
 
     }
+
 	//get all
 	@RequestMapping("/produtos")
     public ResponseEntity produtos() {
