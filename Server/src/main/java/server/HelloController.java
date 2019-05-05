@@ -181,6 +181,8 @@ public class HelloController {
 		if (t.isPresent()){
 			Trilha trilha = t.get();
 			Long[] pos = {(long)trilha.getPosicaoLinha(), (long)trilha.getPosicaoColuna(), transacao.getID()};
+			transacao.setEstado(4);
+			transacaoRepository.save(transacao);
 			return ResponseEntity.ok(pos);
 		}else{
 			//erro, a trilha esta vazia
@@ -191,7 +193,7 @@ public class HelloController {
 	//post produto dispensado
 	@PostMapping(value="/dispensado/{id}")
 	public ResponseEntity dispensed(@PathVariable("id") Long id, @RequestBody List<Integer> pos) {
-		List transacoes = transacaoRepository.findTransactionsWaitingToDispense(id);
+		List transacoes = transacaoRepository.findTransactionsWaitingToConfirmDispensed(id);
 		
 		if (transacoes.size() == 0) {
 			return ResponseEntity.ok(new Resposta("No transaction found", 1));
@@ -202,6 +204,9 @@ public class HelloController {
 		if (t.isPresent()){
 			Trilha trilha = t.get();
 			trilha.setQtdeProdutos(trilha.getQtdeProdutos()-1);
+			trilhaRepository.save(trilha);
+			transacao.setEstado(5);
+			transacaoRepository.save(transacao);
 			return ResponseEntity.ok(new Resposta("OK", 0));
 		}
 		return ResponseEntity.ok(new Resposta("Error finding trilha", 1));
