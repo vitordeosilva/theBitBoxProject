@@ -184,6 +184,25 @@ public class HelloController {
 			return ResponseEntity.ok(-1);
 		}
 	}
+	
+	//post produto dispensado
+	@PostMapping(value="/dispensado/{id}")
+	public ResponseEntity dispensed(@PathVariable("id") Long id, @RequestBody List<Integer> pos) {
+		List transacoes = transacaoRepository.findTransactionsWaitingToDispense(id);
+		
+		if (transacoes.size() == 0) {
+			return ResponseEntity.ok(-1);
+		}
+		
+		Transacao transacao = (Transacao) transacoes.get(0);
+		Optional<Trilha> t = trilhaRepository.getTrilhaFromPos(transacao.getMaquinaID(), transacao.getProdutoID(), pos.get(0), pos.get(1));
+		if (t.isPresent()){
+			Trilha trilha = t.get();
+			trilha.setQtdeProdutos(trilha.getQtdeProdutos()-1);
+			return ResponseEntity.ok(new Resposta("OK", 0));
+		}
+		return ResponseEntity.ok(new Resposta("Error finding trilha", 1));
+	}
 
 	//get produtos disponiveis na maquina 
     @RequestMapping("/itens/{maquina_id}")
@@ -191,7 +210,7 @@ public class HelloController {
 
 		List itens = maquinaRepository.getItems(maquina_id);
 		if (itens.size() == 0) {
-			return ResponseEntity.ok(new Resposta("There are no available items in the machine", -1));
+			return ResponseEntity.ok(new Resposta("There are no available items in the machine", 1));
 		}
 		else{
 			return ResponseEntity.ok(new MaquinaResposta("OK", 0, maquina_id, itens));
