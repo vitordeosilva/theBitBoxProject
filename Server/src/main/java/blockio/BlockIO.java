@@ -8,7 +8,7 @@ import org.apache.http.util.EntityUtils;
 import com.google.gson.Gson;
 
 public class BlockIO {
-	String api_key = "6bef-475f-4d48-2370";
+	private static String api_key = "6bef-475f-4d48-2370";
 	
 	public static float[] getSaldo(String address) throws Exception {
 		
