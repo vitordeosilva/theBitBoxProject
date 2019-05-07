@@ -13,7 +13,7 @@ public class BlockIO {
 	public static float[] getSaldo(String address) throws Exception {
 		
 		CloseableHttpClient client = HttpClients.createDefault();
-		HttpGet get = new HttpGet("https://block.io/api/v2/get_balance/?api_key=" + api_key + "&address=" + address);
+		HttpGet get = new HttpGet("https://block.io/api/v2/get_address_balance/?api_key=" + api_key + "&address=" + address);
 		CloseableHttpResponse resposta = client.execute(get);
 		
 		Gson gson = new Gson();
