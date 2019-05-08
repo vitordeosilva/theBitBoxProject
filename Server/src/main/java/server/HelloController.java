@@ -61,7 +61,7 @@ public class HelloController {
 		List transacoes = transacaoRepository.findUnfinishedTransactionsFromMID(transacao.getMaquinaID());
 		if (!transacoes.isEmpty())
 			return ResponseEntity.ok(new Resposta("Machine already has an ongoing transaction", 1));
-		transacao.setEstado(1);
+		transacao.setEstado(3);
 		transacao = transacaoRepository.save(transacao);
 		return ResponseEntity.ok(new NovaTransacaoResposta("OK", 0, transacao.getID()));
 	}
