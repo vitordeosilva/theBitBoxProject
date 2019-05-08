@@ -61,7 +61,30 @@ public class HelloController {
 		List transacoes = transacaoRepository.findUnfinishedTransactionsFromMID(transacao.getMaquinaID());
 		if (!transacoes.isEmpty())
 			return ResponseEntity.ok(new Resposta("Machine already has an ongoing transaction", 1));
-		transacao.setEstado(3);
+		transacao.setEstado(1);
+		
+		Optional <Usuario> user = usuarioRepository.findById(transacao.getUsuarioID());
+		if (!user.isPresent())
+			return ResponseEntity.ok(new Resposta("User not found", 1));
+		Usuario u = user.get();
+		
+		Optional <Produto> prod = produtoRepository.findById(transacao.getProdutoID());
+		if (prod.isPresent())
+			return ResponseEntity.ok(new Resposta("Product not found", 1));
+		Produto p = prod.get();
+		
+		boolean result = false;
+		
+		try{
+		result = BlockIO.fazTransacao(u.getIdCarteira(), p.getPrecoUnitario());
+		} catch (Exception e) {
+			return ResponseEntity.ok(new Resposta("Error communicating with block.io: " + e.toString(), 1));
+		}
+		if(result == true)
+			transacao.setEstado(3);
+		else
+			return ResponseEntity.ok(new Resposta("Could not complete transaction", 1));
+
 		transacao = transacaoRepository.save(transacao);
 		return ResponseEntity.ok(new NovaTransacaoResposta("OK", 0, transacao.getID()));
 	}
