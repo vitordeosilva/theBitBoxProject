@@ -69,7 +69,7 @@ public class HelloController {
 		Usuario u = user.get();
 		
 		Optional <Produto> prod = produtoRepository.findById(transacao.getProdutoID());
-		if (prod.isPresent())
+		if (!prod.isPresent())
 			return ResponseEntity.ok(new Resposta("Product not found", 1));
 		Produto p = prod.get();
 		
