@@ -73,10 +73,26 @@ public class HelloController {
 			return ResponseEntity.ok(new Resposta("Product not found", 1));
 		Produto p = prod.get();
 		
-		boolean result = false;
+		Optional <Maquina> maq = maquinaRepository.findById(transacao.getMaquinaID());
+		if (!maq.isPresent())
+			return ResponseEntity.ok(new Resposta("Machine not found", 1));
+		Maquina m = maq.get();
+
+		Optional<Trilha> t = trilhaRepository.getTrilha(transacao.getMaquinaID(), transacao.getProdutoID());
+		if (!t.isPresent()){
+			return ResponseEntity.ok(new Resposta("Trilha not found", 1));
+		}
+		else{
+			Trilha trilha = t.get();
+			if (trilha.getQtdeProdutos() <= 0){
+				return ResponseEntity.ok(new Resposta("The product is not available", 1));
+			}
+		}
 		
+		boolean result = false;		
+
 		try{
-		result = BlockIO.fazTransacao(u.getIdCarteira(), p.getPrecoUnitario());
+			result = BlockIO.fazTransacao(u.getIdCarteira(), m.getIdCarteira(), p.getPrecoUnitario());
 		} catch (Exception e) {
 			return ResponseEntity.ok(new Resposta("Error communicating with block.io: " + e.toString(), 1));
 		}

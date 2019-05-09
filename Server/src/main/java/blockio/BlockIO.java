@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 public class BlockIO {
 	private static String api_key = "6bef-475f-4d48-2370";
 	private static String pin = "TrupeDoBitBox";
-	private static String address = "2N5M6tFwDx6D9ja7Xnjm7WVoQTMXmobwXwy";
 	
 	public static float[] getSaldo(String address) throws Exception {
 		
@@ -32,11 +31,11 @@ public class BlockIO {
 		}
 	}
 	
-	public static boolean fazTransacao(String source_address, float amount) throws Exception {
+	public static boolean fazTransacao(String source_address, String destination_address, float amount) throws Exception {
 		
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpGet get = new HttpGet("https://block.io/api/v2/withdraw_from_addresses/?api_key=" + api_key + "&from_addresses="
-		+ source_address + "&to_addresses=" + address + "&amounts=" + Float.toString(amount) + "&pin=" + pin);
+		+ source_address + "&to_addresses=" + destination_address + "&amounts=" + Float.toString(amount) + "&pin=" + pin);
 		CloseableHttpResponse resposta = client.execute(get);
 		
 		Gson gson = new Gson();
