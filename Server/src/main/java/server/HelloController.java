@@ -80,13 +80,7 @@ public class HelloController {
 
 		Optional<Trilha> t = trilhaRepository.getTrilha(transacao.getMaquinaID(), transacao.getProdutoID());
 		if (!t.isPresent()){
-			return ResponseEntity.ok(new Resposta("Trilha not found", 1));
-		}
-		else{
-			Trilha trilha = t.get();
-			if (trilha.getQtdeProdutos() <= 0){
-				return ResponseEntity.ok(new Resposta("The product is not available", 1));
-			}
+			return ResponseEntity.ok(new Resposta("Trilha not found or product is not available", 1));
 		}
 		
 		boolean result = false;		
