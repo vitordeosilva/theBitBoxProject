@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 
 public class BlockIO {
 	private static String api_key = "6bef-475f-4d48-2370";
-	private static String pin = "TrupeDoBitBox";
 	
 	public static float[] getSaldo(String address) throws Exception {
 		
@@ -35,7 +34,7 @@ public class BlockIO {
 		
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpGet get = new HttpGet("https://block.io/api/v2/withdraw_from_addresses/?api_key=" + api_key + "&from_addresses="
-		+ source_address + "&to_addresses=" + destination_address + "&amounts=" + Float.toString(amount) + "&pin=" + pin);
+		+ source_address + "&to_addresses=" + destination_address + "&amounts=" + Float.toString(amount));
 		CloseableHttpResponse resposta = client.execute(get);
 		
 		Gson gson = new Gson();
