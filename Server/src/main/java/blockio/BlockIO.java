@@ -33,7 +33,7 @@ public class BlockIO {
 	}
 	
 	public static boolean fazTransacao(String source_address, String destination_address, float amount) throws Exception {
-		String command = "python3 BlockIOTransaction.py " + Float.toString(amount) + " " + source_address + " " + destination_address;
+		String command = "python3 src/main/java/blockio/BlockIOTransaction.py " + Float.toString(amount) + " " + source_address + " " + destination_address;
 		String out = "";
 		String line = "";
 		Process process = Runtime.getRuntime().exec(command);
