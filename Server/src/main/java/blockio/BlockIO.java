@@ -42,8 +42,7 @@ public class BlockIO {
 			out += line;
 		
 		Gson gson = new Gson();
-		BlockIOResposta bio_resposta = gson.fromJson(out, BlockIOResposta.class);
-		resposta.close();		
+		BlockIOResposta bio_resposta = gson.fromJson(out, BlockIOResposta.class);		
 		
 		if (bio_resposta.status.equals("success"))
 			return true;
