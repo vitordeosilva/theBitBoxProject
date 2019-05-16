@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 public class BlockIO {
 	private static String api_key = "6bef-475f-4d48-2370";
+	private static String pin = "TrupeDoBitBox";
 	
 	public static float[] getSaldo(String address) throws Exception {
 		
@@ -31,15 +32,17 @@ public class BlockIO {
 	}
 	
 	public static boolean fazTransacao(String source_address, String destination_address, float amount) throws Exception {
-		
-		CloseableHttpClient client = HttpClients.createDefault();
-		HttpGet get = new HttpGet("https://block.io/api/v2/withdraw_from_addresses/?api_key=" + api_key + "&from_addresses="
-		+ source_address + "&to_addresses=" + destination_address + "&amounts=" + Float.toString(amount));
-		CloseableHttpResponse resposta = client.execute(get);
+		String command = "python BlockIOTransaction.py " + Float.toString(amout) + " " + source_address + " " + destination_address;
+		String out = "";
+		String line = "";
+		Process process = Runtime.getRuntime().exec(command);
+		process.waitFor();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+		while((line = reader.readLine()) != null)
+			out += line;
 		
 		Gson gson = new Gson();
-		String jsonText = EntityUtils.toString(resposta.getEntity());
-		BlockIOResposta bio_resposta = gson.fromJson(jsonText, BlockIOResposta.class);
+		BlockIOResposta bio_resposta = gson.fromJson(out, BlockIOResposta.class);
 		resposta.close();		
 		
 		if (bio_resposta.status.equals("success"))
