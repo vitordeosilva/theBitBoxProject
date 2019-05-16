@@ -6,6 +6,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 import com.google.gson.Gson;
+import java.io.*;
 
 public class BlockIO {
 	private static String api_key = "6bef-475f-4d48-2370";
@@ -32,7 +33,7 @@ public class BlockIO {
 	}
 	
 	public static boolean fazTransacao(String source_address, String destination_address, float amount) throws Exception {
-		String command = "python BlockIOTransaction.py " + Float.toString(amout) + " " + source_address + " " + destination_address;
+		String command = "python BlockIOTransaction.py " + Float.toString(amount) + " " + source_address + " " + destination_address;
 		String out = "";
 		String line = "";
 		Process process = Runtime.getRuntime().exec(command);
