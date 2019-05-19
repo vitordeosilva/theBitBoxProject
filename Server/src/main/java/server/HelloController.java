@@ -37,8 +37,8 @@ public class HelloController {
 	
 	private int ESTADO_CLIENTE_ESCOLHEU_DOCE = 1;
 	private int ESTADO_ESPERANDO_PAGAMENTO = 2;
-	private int ESTADO_PAGAMENTO_EM_ANDAMENTO = 3;
-	private int ESTADO_PRODUTO_LIBERADO = 4;
+	private int ESTADO_PAGAMENTO_CONFIRMADO = 3;
+	private int ESTADO_PRODUTO_DISPENSADO = 4;
 	private int ESTADO_PRODUTO_RETIRADO = 5;
 	
 	//tela de hello
@@ -112,6 +112,19 @@ public class HelloController {
 	@PostMapping("/usuarios")
 	public ResponseEntity newUsuario(@RequestBody Usuario usuario) {
 		return ResponseEntity.ok(usuarioRepository.save(usuario));
+	}
+	
+	@PostMapping("/usuarios/{id}/checkPin") 
+	public ResponseEntity checkPin(@PathVariable("id") Long id, @RequestBody Integer pin) {
+		Optional <Usuario> user = usuarioRepository.findById(id);
+		if (!user.isPresent())
+			return ResponseEntity.ok(new Resposta("User not found", 1));
+		Usuario u = user.get();
+		
+		if (u.getPin() != pin)
+			return ResponseEntity.ok(new Resposta("Wrong PIN", 1));
+		
+		return ResponseEntity.ok(new Resposta("OK", 0));
 	}
 	
 	//deleta do banco por id
