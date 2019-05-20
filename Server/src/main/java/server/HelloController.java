@@ -114,7 +114,7 @@ public class HelloController {
 		return ResponseEntity.ok(usuarioRepository.save(usuario));
 	}
 	
-	/*@PostMapping("/usuarios/{id}/checkPin") 
+	@PostMapping("/usuarios/{id}/checkPin") 
 	public ResponseEntity checkPin(@PathVariable("id") Long id, @RequestBody Integer pin) {
 		Optional <Usuario> user = usuarioRepository.findById(id);
 		if (!user.isPresent())
@@ -125,7 +125,7 @@ public class HelloController {
 			return ResponseEntity.ok(new Resposta("Wrong PIN", 1));
 		
 		return ResponseEntity.ok(new Resposta("OK", 0));
-	}*/
+	}
 	
 	//deleta do banco por id
 	@RequestMapping(value = "/produtos/{id}",method=RequestMethod.DELETE)
