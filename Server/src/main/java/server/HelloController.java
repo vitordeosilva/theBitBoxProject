@@ -194,10 +194,14 @@ public class HelloController {
     @PostMapping(value="/login")
     public ResponseEntity usuarioByNameAndPasswd(@RequestBody Map<String, String> json) {
 		String nome = json.get("nome");
-		String senha = encodePassword(json.get("senha"));
-		Optional<Usuario> usuario = usuarioRepository.findByNameAndPasswd(nome,senha);
+		String senha = json.get("senha");
+		Optional<Usuario> usuario = usuarioRepository.findByName(nome);
 		if (usuario.isPresent()){
 			Usuario user = usuario.get();
+
+			if (!checkPassword(senha, user.getSenha()))
+				return ResponseEntity.ok(new Resposta("USER NOT FOUND", 1));
+
 			float[] saldos = null;
 			try {
 				saldos = BlockIO.getSaldo(user.getIdCarteira());
@@ -359,5 +363,8 @@ public class HelloController {
 	@Autowired BCryptPasswordEncoder passwordEncoder;
 	public String encodePassword(String p) {
 		return passwordEncoder.encode(p);
+	}
+	public Boolean checkPassword(String password_to_check, String db_password) {
+		return passwordEncoder.matches(password_to_check, db_password);
 	}
 }
