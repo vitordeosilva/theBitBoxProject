@@ -113,7 +113,6 @@ public class HelloController {
 	@PostMapping("/usuarios")
 	public ResponseEntity newUsuario(@RequestBody Usuario usuario) {
 		usuario.setSenha(encodePassword(usuario.getSenha()));
-		usuario.setPin(encodePassword(usuario.getPin()));
 		return ResponseEntity.ok(usuarioRepository.save(usuario));
 	}
 	
@@ -124,7 +123,7 @@ public class HelloController {
 			return ResponseEntity.ok(new Resposta("User not found", 1));
 		Usuario u = user.get();
 		
-		if (!checkPassword(pin, u.getPin()))
+		if (pin != u.getPin()))
 			return ResponseEntity.ok(new Resposta("Wrong PIN", 1));
 		
 		return ResponseEntity.ok(new Resposta("OK", 0));
@@ -367,11 +366,5 @@ public class HelloController {
 	}
 	public Boolean checkPassword(String password_to_check, String db_password) {
 		return passwordEncoder.matches(password_to_check, db_password);
-	}
-	
-	@RequestMapping("/debug")
-	public ResponseEntity debug() {
-		usuarioRepository.debug();
-		return ResponseEntity.ok("OK");
 	}
 }
