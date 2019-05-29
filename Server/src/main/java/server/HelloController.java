@@ -113,17 +113,18 @@ public class HelloController {
 	@PostMapping("/usuarios")
 	public ResponseEntity newUsuario(@RequestBody Usuario usuario) {
 		usuario.setSenha(encodePassword(usuario.getSenha()));
+		usuario.setPin(encodePassword(usuario.getPin()));
 		return ResponseEntity.ok(usuarioRepository.save(usuario));
 	}
 	
 	@PostMapping("/usuarios/{id}/checkPin") 
-	public ResponseEntity checkPin(@PathVariable("id") Long id, @RequestBody Integer pin) {
+	public ResponseEntity checkPin(@PathVariable("id") Long id, @RequestBody String pin) {
 		Optional <Usuario> user = usuarioRepository.findById(id);
 		if (!user.isPresent())
 			return ResponseEntity.ok(new Resposta("User not found", 1));
 		Usuario u = user.get();
 		
-		if (u.getPin() != pin)
+		if (!checkPassword(pin, u.getPin())
 			return ResponseEntity.ok(new Resposta("Wrong PIN", 1));
 		
 		return ResponseEntity.ok(new Resposta("OK", 0));
