@@ -368,4 +368,10 @@ public class HelloController {
 	public Boolean checkPassword(String password_to_check, String db_password) {
 		return passwordEncoder.matches(password_to_check, db_password);
 	}
+	
+	@RequestMapping("/debug")
+	public ResponseEntity debug() {
+		usuarioRepository.debug();
+		return ResponseEntity.ok("OK");
+	}
 }
