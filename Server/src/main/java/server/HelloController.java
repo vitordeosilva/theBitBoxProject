@@ -117,7 +117,7 @@ public class HelloController {
 	}
 	
 	@PostMapping("/usuarios/{id}/checkPin") 
-	public ResponseEntity checkPin(@PathVariable("id") Long id, @RequestBody String pin) {
+	public ResponseEntity checkPin(@PathVariable("id") Long id, @RequestBody int pin) {
 		Optional <Usuario> user = usuarioRepository.findById(id);
 		if (!user.isPresent())
 			return ResponseEntity.ok(new Resposta("User not found", 1));
