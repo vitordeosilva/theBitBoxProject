@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
@@ -111,6 +112,7 @@ public class HelloController {
 	
 	@PostMapping("/usuarios")
 	public ResponseEntity newUsuario(@RequestBody Usuario usuario) {
+		usuario.setSenha(encodePassword(usuario.getSenha()));
 		return ResponseEntity.ok(usuarioRepository.save(usuario));
 	}
 	
@@ -192,7 +194,7 @@ public class HelloController {
     @PostMapping(value="/login")
     public ResponseEntity usuarioByNameAndPasswd(@RequestBody Map<String, String> json) {
 		String nome = json.get("nome");
-		String senha = json.get("senha");
+		String senha = encodePassword(json.get("senha"));
 		Optional<Usuario> usuario = usuarioRepository.findByNameAndPasswd(nome,senha);
 		if (usuario.isPresent()){
 			Usuario user = usuario.get();
@@ -208,7 +210,6 @@ public class HelloController {
 			List id_trans = transacaoRepository.findUnfinishedTransactionsFromUID(user.getId());
 			return ResponseEntity.ok(new LoginResposta("OK", 0, user.getId(), saldo, saldo_pendente, id_trans));
 		}else{
-			List l = new ArrayList();
 		 	return ResponseEntity.ok(new Resposta("USER NOT FOUND", 1));
 		}
     }
@@ -353,5 +354,10 @@ public class HelloController {
 		}else{
 		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@Autowired BCryptPasswordEncoder passwordEncoder;
+	public String encodePassword(String p) {
+		return passwordEncoder.encode(p);
 	}
 }
