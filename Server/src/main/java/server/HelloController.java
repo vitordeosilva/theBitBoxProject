@@ -124,7 +124,7 @@ public class HelloController {
 			return ResponseEntity.ok(new Resposta("User not found", 1));
 		Usuario u = user.get();
 		
-		if (!checkPassword(pin, u.getPin())
+		if (!checkPassword(pin, u.getPin()))
 			return ResponseEntity.ok(new Resposta("Wrong PIN", 1));
 		
 		return ResponseEntity.ok(new Resposta("OK", 0));
