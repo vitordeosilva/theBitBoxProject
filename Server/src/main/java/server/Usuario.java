@@ -27,6 +27,9 @@ public class Usuario {
 
     @OneToMany(mappedBy="usuarioID", cascade = CascadeType.ALL)
     private Set<Transacao> transacoes = new HashSet();
+	
+	@OneToMany(mappedBy="usuarioID", cascade = CascadeType.ALL)
+	private Set<Comentario> comentarios = new HashSet();
 
 	public Long getId() {
 		return id;
@@ -61,6 +64,13 @@ public class Usuario {
 	}
 	public void setTransacoes(Set transacoes){
 		this.transacoes = transacoes;
+	}
+	
+	public Set getComentarios(){
+		return comentarios;
+	}
+	public void setComentarios(Set comentarios){
+		this.comentarios = comentarios;
 	}
 	
 	public String getPin(){

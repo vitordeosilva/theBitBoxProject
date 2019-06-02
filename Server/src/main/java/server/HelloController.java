@@ -36,6 +36,9 @@ public class HelloController {
 	@Autowired
 	MaquinaRepository maquinaRepository;
 	
+	@Autowired
+	ComentarioRepository comentarioRepository;
+	
 	private int ESTADO_CLIENTE_ESCOLHEU_DOCE = 1;
 	private int ESTADO_ESPERANDO_PAGAMENTO = 2;
 	private int ESTADO_PAGAMENTO_CONFIRMADO = 3;
@@ -115,6 +118,11 @@ public class HelloController {
 		usuario.setSenha(encodePassword(usuario.getSenha()));
 		usuario.setPin(encodePassword(usuario.getPin()));
 		return ResponseEntity.ok(usuarioRepository.save(usuario));
+	}
+	
+	@PostMapping("/comentarios")
+	public ResponseEntity newUsuario(@RequestBody Comentario comentario) {
+		return ResponseEntity.ok(comentarioRepository.save(comentario));
 	}
 	
 	@PostMapping("/usuarios/{id}/checkPin") 
@@ -307,6 +315,12 @@ public class HelloController {
 		List maquinas = maquinaRepository.findAll();
 		return ResponseEntity.ok(maquinas);
     }
+	
+	@RequestMapping("/comentarios")
+    public ResponseEntity comentarios() {
+		List comentarios = comentarioRepository.findAll();
+		return ResponseEntity.ok(comentarios);
+    }
 
 	//get por id
     @RequestMapping("/produtos/{id}")
@@ -355,6 +369,16 @@ public class HelloController {
 		Optional<Maquina> maquina = maquinaRepository.findById(id);
 		if (maquina.isPresent()){
 			return ResponseEntity.ok(maquina.get());
+		}else{
+		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@RequestMapping("/comentarios/{id}")
+	public ResponseEntity comentario(@PathVariable("id") Long id) {
+		Optional<Comentario> comentario = comentarioRepository.findById(id);
+		if (comentario.isPresent()){
+			return ResponseEntity.ok(comentario.get());
 		}else{
 		 	return new ResponseEntity<HttpStatus>(HttpStatus.NOT_FOUND);
 		}
