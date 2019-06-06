@@ -18,6 +18,17 @@ import java.util.Map;
 import resposta.*;
 import blockio.*;
 
+class Pin {
+	int pin;
+
+	public int getPin(){
+		return pin;
+	}
+	public void setPin(){
+		this.pin = pin;
+	}
+}
+
 @RestController
 public class HelloController {
 	
@@ -117,12 +128,12 @@ public class HelloController {
 	}
 	
 	@PostMapping("/usuarios/{id}/checkPin") 
-	public ResponseEntity checkPin(@PathVariable("id") Long id, @RequestBody int pin) {
+	public ResponseEntity checkPin(@PathVariable("id") Long id, @RequestBody Pin pin) {
 		Optional <Usuario> user = usuarioRepository.findById(id);
 		if (!user.isPresent())
 			return ResponseEntity.ok(new Resposta("User not found", 1));
 		Usuario u = user.get();
-		if (pin != u.getPin())
+		if (pin.getPin() != u.getPin())
 			return ResponseEntity.ok(new Resposta("Wrong PIN", 1));
 		
 		return ResponseEntity.ok(new Resposta("OK", 0));
