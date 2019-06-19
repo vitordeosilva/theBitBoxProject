@@ -23,6 +23,7 @@ public class Usuario {
 	private String nome;
 	private String senha;
 	private String idCarteira;
+	private int pin;
 
     @OneToMany(mappedBy="usuarioID", cascade = CascadeType.ALL)
     private Set<Transacao> transacoes = new HashSet();
@@ -60,5 +61,13 @@ public class Usuario {
 	}
 	public void setTransacoes(Set transacoes){
 		this.transacoes = transacoes;
+	}
+	
+	public int getPin(){
+		return pin;
+	}
+	
+	public void setPin(int pin){
+		this.pin = pin;
 	}
 }

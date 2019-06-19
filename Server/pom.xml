@@ -53,6 +53,10 @@
 			<artifactId>heroku-json-gson</artifactId>
 			<version>0.10</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 	</dependencies>
 	
 
