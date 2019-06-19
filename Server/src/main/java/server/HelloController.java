@@ -199,6 +199,20 @@ public class HelloController {
 		}
 	}
 
+	//muda qtde produtos na trilha
+	@RequestMapping("/trilhas/{id}")
+	public ResponseEntity setQtdeTrilha(@PathVariable("id") Long id, @RequestParam("qtdeProdutos") int qtdeProdutos) {
+		Optional<Trilha> trilha = trilhaRepository.findById(id);
+		if (trilha.isPresent()){
+			Trilha t = trilha.get();
+			t.setQtdeProdutos(qtdeProdutos);
+			trilhaRepository.save(t);
+			return ResponseEntity.ok(new Resposta("OK", 0));			
+		}else{
+		 	return ResponseEntity.ok(new Resposta("Trilha not found", 1));
+		}
+	}
+
 
 	//post usuario por nome e senha	
     @PostMapping(value="/login")
