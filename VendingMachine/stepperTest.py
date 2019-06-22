@@ -35,6 +35,10 @@ class UtilVelocity:
 
         for i in range(startingIndex, finalIndex + 1):
             sumFreq += list[i]
+        print(list)
+        print(stepNumber)
+        print(posSlopeRatio)
+        print(sumFreq)
         stepsPerTransition = posSlopeRatio * stepNumber / sumFreq
 
         index = 0
@@ -78,68 +82,6 @@ class UtilVelocity:
         return(chainList)
 
 
-class UtilTK():
-    def __init__(self, root):
-        # starting full screen
-        self.root = root
-        self.screenH = root.winfo_screenheight()
-        self.screenW = root.winfo_screenwidth()
-        self.windowH = self.screenH
-        self.windowW = self.screenW
-        strGeometry = str(self.windowW)+"x"+str(self.screenH)
-        self.root.geometry(strGeometry)
-        self.root.attributes("-fullscreen", True)
-        self.root.configure(background = 'white')
-
-        self.QRCode=Image.open("/home/pi/Projects/theBitBoxProject/VendingMachine/imgs/QRCode.png")
-        self.imgLoading1=Image.open("/home/pi/Projects/theBitBoxProject/VendingMachine/imgs/loading1.png")
-        self.imgLoading2=Image.open("/home/pi/Projects/theBitBoxProject/VendingMachine/imgs/loading2.png")
-        self.imgLoading3=Image.open("/home/pi/Projects/theBitBoxProject/VendingMachine/imgs/loading3.png")
-        self.imgFinished=Image.open("/home/pi/Projects/theBitBoxProject/VendingMachine/imgs/finished.png")
-
-        #creating square canvas in the middle of the screen
-        self.canvasH = self.screenH
-        self.canvasW = self.screenW
-        self.positionX = 0
-        self.positionY = 0
-        self.canvas = tk.Canvas(self.root, width=self.canvasW, height=self.canvasH, bd = 0,highlightthickness=0)
-        self.canvas.configure(background='white')
-        self.canvas.pack()
-
-    def showImage(self, img):
-        imgWidth, imgHeight = img.size
-        ratio = min(self.canvasW / imgWidth, self.canvasH / imgHeight)
-        imgWidth = int(imgWidth*ratio)
-        imgHeight = int(imgHeight*ratio)
-        pilImage = img.resize((self.screenW,self.screenH), Image.ANTIALIAS)
-        self.photo = ImageTk.PhotoImage(pilImage)
-        imagesprite = self.canvas.create_image(0,0,anchor = NW, image=self.photo)
-        self.canvas.configure(background='black')
-        self.canvas.image = img
-        self.root.update_idletasks()
-        self.root.update()
-    def showQRCode(self):
-        imgWidth, imgHeight = self.QRCode.size
-        ratio = min(self.canvasW / imgWidth, self.canvasH / imgHeight)
-        imgWidth = int(imgWidth*ratio)
-        imgHeight = int(imgHeight*ratio)
-        pilImage = self.QRCode.resize((self.canvasH,self.canvasH), Image.ANTIALIAS)
-        self.photo = ImageTk.PhotoImage(pilImage)
-        imagesprite = self.canvas.create_image(int(self.screenW/2 - self.canvasH/2),0,anchor = NW, image=self.photo)
-        self.canvas.configure(background='black')
-        self.canvas.image = self.QRCode
-        self.root.update_idletasks()
-        self.root.update()
-
-    def iterate(self):
-        self.root.update_idletasks()
-        self.root.update()
-
-url_base = 'http://aqueous-peak-23356.herokuapp.com'
-
-def mudaEstadoTransacao(id_trans, estado):
-    return requests.post(url_base + '/transacoes/' + str(id_trans), data={'estado': estado})
-
 class MotorController:
 
     def __init__(self, stepPins, directionPins, servoPins, servoFactors, servoPwm):
@@ -147,20 +89,26 @@ class MotorController:
 
         self.UTV = UtilVelocity()
 
-        self.rampPosition2x = [[313, 450]]
+        self.rampPosition2x = [[400, 450]]
 
         self.rampPosition2y = self.UTV.getPiChain(400, 800, 1.0/2, 1.0/10, 1070)
 
-        self.rampPosition1x = [[313, 1]]
+        self.rampPosition1x = [[400, 1]]
 
         self.rampPosition1y = self.UTV.getPiChain(400, 800, 1.0/2, 1.0/10, 350)
 
+        
+        print(self.rampPosition2y)
+        print(self.rampPosition2x)
         self.servoFactors = servoFactors
         self.stepperPins = stepPins
         self.servoPins = servoPins
         self.servoPwm = servoPwm
         self.directionPins = directionPins
 
+
+        #stepPins = [stepPin1, stepPin2]
+        #servoPins = [servo1, servo2, servo3, servo4]
 
     def moveSteppers1(self, ramp1, ramp2):
         l1 = len(ramp1)
@@ -222,7 +170,7 @@ class MotorController:
         self.pi.wave_chain(chain2)
         while self.pi.wave_tx_busy():
             time.sleep(0.1)
-
+            
         self.pi.wave_chain(chain1)
         while self.pi.wave_tx_busy():
             time.sleep(0.1)
@@ -293,18 +241,18 @@ class MotorController:
         self.pi.wave_chain(chain1)
         while self.pi.wave_tx_busy():
             time.sleep(0.1)
-
+            
         self.pi.wave_chain(chain2)
         while self.pi.wave_tx_busy():
             time.sleep(0.1)
-
+            
 
         for i in range(l1):
             self.pi.wave_delete(wid1[i])
 
         for i in range(l2):
             self.pi.wave_delete(wid2[i])
-
+            
     def dispenseProduct(self, servoNumber):
         pin = self.servoPins[servoNumber]
         frequency = 50
@@ -338,21 +286,16 @@ class MotorController:
             rampY = self.rampPosition2y
             print("Movimentando para a posicao (2,2)")
 
-        UTK.showImage(UTK.imgLoading1)
         self.pi.write(directionPins[0], True)
         self.pi.write(directionPins[1], True)
 
         self.moveSteppers1(rampX, rampY)
-        UTK.showImage(UTK.imgLoading2)
         self.dispenseProduct(servoNumber)
 
-        UTK.showImage(UTK.imgLoading3)
         self.pi.write(directionPins[0], False)
         self.pi.write(directionPins[1], False)
 
         self.moveSteppers2(rampX, rampY)
-        
-        UTK.showImage(UTK.imgFinished)
     def setup(self):
         GPIO.setmode(GPIO.BCM)
         for i in range(len(servoPins)):
@@ -364,6 +307,7 @@ class MotorController:
             self.pi.write(servoPins[i], False)
         self.pi.wave_clear()
         self.pi.stop()
+
 
 
 
@@ -420,66 +364,59 @@ servo4 = 26
 vdd = 5
 
 
-
-postUrl = 'https://aqueous-peak-23356.herokuapp.com/dispensado/1'
-getUrl = 'https://aqueous-peak-23356.herokuapp.com/dispensar/1'
-
-completedTransitionCode = 1
-ongoingTransitionCode = 2
-newTransitionCode = 3
-
 stepperPins= [stepPin1, stepPin2]
 servoPins = [servo1, servo2, servo3, servo4]
-servoFactors = [1.21,1.1,1.10,1.30]
+servoFactors = [1.21,1.1,1.09,1.29]
 servoPwm = [900,900,900,900]
 directionPins = [directionPin1, directionPin2]
 
 controller = MotorController(stepperPins, directionPins, servoPins, servoFactors, servoPwm)
 
 
+controller.pi.set_mode(vdd, pigpio.OUTPUT)
+controller.pi.write(vdd, True)
+
+
 controller.pi.set_mode(servo1, pigpio.OUTPUT)
 controller.pi.set_mode(servo2, pigpio.OUTPUT)
 controller.pi.set_mode(servo3, pigpio.OUTPUT)
 controller.pi.set_mode(servo4, pigpio.OUTPUT)
-controller.pi.set_mode(vdd, pigpio.OUTPUT)
 
-controller.pi.write(vdd, True)
-rJson = -1
 
-#tkinter
-root = tk.Tk()
-UTK = UtilTK(root)
 
 try:
     while(1):
         print("Esperando transacao: ")
-
-        UTK.showImage(UTK.QRCode)
-        while(rJson == -1):
-            rJson = requests.get(getUrl).json()
-            time.sleep(0.5)
-
-        print("Transacao iniciada, processando" + str(rJson))
-        #mudaEstadoTransacao(10, ongoingTransitionCode)
-
-        positionX = rJson[0]
-        positionY = rJson[1]
-        transactionId = rJson[2]
-
-        #TODO - Imagens para cada parte do processo
+        
+        positionX = 1
+        positionY = 1
+        
         controller.driveMotors(positionX, positionY)
-        #mudaEstadoTransacao(transactionId, 5)
-
-        headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
-        r = requests.post(postUrl, data = '['+ str(positionX) + ',' + str(positionY) + ']', headers = headers)
-
-
-
-
+        
+        time.sleep(0.5)
+                
+        positionX = 2
+        positionY = 1
+    
+        controller.driveMotors(positionX, positionY)
+        print("\n Processamento completo, retornando")
+        
+        time.sleep(0.5)
+                
+        positionX = 2
+        positionY = 2    
+        controller.driveMotors(positionX, positionY)
         print("\n Processamento completo, retornando")
 
-        time.sleep(5)
-        rJson = -1
+        
+        time.sleep(0.5)
+                
+        positionX = 1
+        positionY = 2    
+        controller.driveMotors(positionX, positionY)
+        print("\n Processamento completo, retornando")
+        
+        time.sleep(0.5)
     #params = {'estado': completedTransactionCode}
     #requests.post(url, params)
 

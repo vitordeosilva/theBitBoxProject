@@ -18,6 +18,17 @@ import java.util.Map;
 import resposta.*;
 import blockio.*;
 
+class Pin {
+	int pin;
+
+	public int getPin(){
+		return pin;
+	}
+	public void setPin(){
+		this.pin = pin;
+	}
+}
+
 @RestController
 public class HelloController {
 	
@@ -126,12 +137,12 @@ public class HelloController {
 	}
 	
 	@PostMapping("/usuarios/{id}/checkPin") 
-	public ResponseEntity checkPin(@PathVariable("id") Long id, @RequestBody String pin) {
+	public ResponseEntity checkPin(@PathVariable("id") Long id, @RequestBody Pin pin) {
 		Optional <Usuario> user = usuarioRepository.findById(id);
 		if (!user.isPresent())
 			return ResponseEntity.ok(new Resposta("User not found", 1));
 		Usuario u = user.get();
-		if (!checkPassword(pin, u.getPin()))
+		if (!checkPassword(pin.getPin(), u.getPin()))
 			return ResponseEntity.ok(new Resposta("Wrong PIN", 1));
 		
 		return ResponseEntity.ok(new Resposta("OK", 0));
@@ -194,6 +205,20 @@ public class HelloController {
 			return ResponseEntity.ok(new Resposta("OK", 0));			
 		}else{
 		 	return ResponseEntity.ok(new Resposta("Product not found", 1));
+		}
+	}
+
+	//muda qtde produtos na trilha
+	@RequestMapping("/trilhas/{id}")
+	public ResponseEntity setQtdeTrilha(@PathVariable("id") Long id, @RequestParam("qtdeProdutos") int qtdeProdutos) {
+		Optional<Trilha> trilha = trilhaRepository.findById(id);
+		if (trilha.isPresent()){
+			Trilha t = trilha.get();
+			t.setQtdeProdutos(qtdeProdutos);
+			trilhaRepository.save(t);
+			return ResponseEntity.ok(new Resposta("OK", 0));			
+		}else{
+		 	return ResponseEntity.ok(new Resposta("Trilha not found", 1));
 		}
 	}
 
