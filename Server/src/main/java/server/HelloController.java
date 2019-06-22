@@ -19,9 +19,9 @@ import resposta.*;
 import blockio.*;
 
 class Pin {
-	int pin;
+	String pin;
 
-	public int getPin(){
+	public String getPin(){
 		return pin;
 	}
 	public void setPin(){
@@ -209,8 +209,8 @@ public class HelloController {
 	}
 
 	//muda qtde produtos na trilha
-	@RequestMapping("/trilhas/{id}")
-	public ResponseEntity setQtdeTrilha(@PathVariable("id") Long id, @RequestParam("qtdeProdutos") int qtdeProdutos) {
+	@RequestMapping("/trilhas/{id}/{qtde}")
+	public ResponseEntity setQtdeTrilha(@PathVariable("id") Long id, @PathVariable("qtde") int qtdeProdutos) {
 		Optional<Trilha> trilha = trilhaRepository.findById(id);
 		if (trilha.isPresent()){
 			Trilha t = trilha.get();
